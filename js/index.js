@@ -9,9 +9,13 @@ import {
 // Registrar mascota
 $("#mascotaForm").on("submit", function (event) {
   event.preventDefault();
+  
   const nombre = $("#nombre").val();
-  const especie = $("#especie").val();
-  const mascota = { nombre, especie };
+  const estado = $("#estado").val(); // Estado (pedido o encontrado)
+  const descripcion = $("#descripcion").val();
+  const imagen = $("#imagen").val();
+  
+  const mascota = { nombre, estado, descripcion, imagen };
 
   const mascotasRef = ref(db, "mascotas/");
   push(mascotasRef, mascota)
@@ -23,25 +27,25 @@ $("#mascotaForm").on("submit", function (event) {
     .catch((error) => alert("Error al registrar mascota: " + error));
 });
 
-// Captura de errores en cargarMascotas
+// Cargar mascotas
 function cargarMascotas() {
   $("#listaMascotas").empty();
-  const mascotasRef = ref(db, "mascotas/"); // Usar ref para obtener la referencia correcta
+  const mascotasRef = ref(db, "mascotas/");
   get(mascotasRef)
-      .then((snapshot) => {
-          if (snapshot.exists()) {
-              snapshot.forEach((childSnapshot) => {
-                  const mascota = childSnapshot.val();
-                  const li = `<li class="list-group-item">${mascota.nombre} - ${mascota.especie}</li>`;
-                  $("#listaMascotas").append(li);
-              });
-          } else {
-              $("#listaMascotas").append('<li class="list-group-item">No hay mascotas registradas.</li>');
-          }
-      })
-      .catch((error) => console.error("Error al cargar mascotas: ", error));
+    .then((snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        const mascota = childSnapshot.val();
+        const li = `
+          <li class="list-group-item">
+            <h5>${mascota.nombre} - ${mascota.estado}</h5>
+            <p>${mascota.descripcion}</p>
+            <img src="${mascota.imagen}" alt="${mascota.nombre}" style="width:100px; height:auto;">
+          </li>`;
+        $("#listaMascotas").append(li);
+      });
+    })
+    .catch((error) => console.error("Error al cargar mascotas: ", error));
 }
-
 
 // Cargar mascotas al iniciar
 $(document).ready(function () {
