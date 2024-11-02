@@ -1,5 +1,15 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getDatabase } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+const auth = getAuth();
+signInAnonymously(auth)
+  .then(() => {
+    console.log("Usuario autenticado anónimamente");
+  })
+  .catch((error) => {
+    console.error("Error en la autenticación anónima:", error);
+  });
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -17,4 +27,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-export { db, app };
+export { db, app, auth };
