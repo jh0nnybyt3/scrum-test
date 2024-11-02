@@ -1,5 +1,10 @@
-import { db } from './db.js';
-import { ref, push, get, child } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+import { db } from "./db.js";
+import {
+  ref,
+  push,
+  get,
+  child,
+} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
 // Registrar mascota
 $("#mascotaForm").on("submit", function (event) {
@@ -18,11 +23,11 @@ $("#mascotaForm").on("submit", function (event) {
     .catch((error) => alert("Error al registrar mascota: " + error));
 });
 
-// Cargar mascotas
+// Captura de errores en cargarMascotas
 function cargarMascotas() {
   $("#listaMascotas").empty();
-  const mascotasRef = ref(db, "mascotas/");
-  get(mascotasRef)
+  db.ref("mascotas/")
+    .once("value")
     .then((snapshot) => {
       snapshot.forEach((childSnapshot) => {
         const mascota = childSnapshot.val();
