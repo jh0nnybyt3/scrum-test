@@ -1,4 +1,4 @@
-import { db } from './db.js'; // Asegúrate de que la ruta sea correcta
+import { db } from './db.js';
 import { ref, push, get, child } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
 // Registrar mascota
