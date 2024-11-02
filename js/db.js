@@ -1,4 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { database } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -15,4 +16,4 @@ const firebaseConfig = {
   // Inicializar Firebase
   const app = initializeApp(firebaseConfig);
   console.log(app.name);
-  const database = app.database();
+  const database = database(app);
