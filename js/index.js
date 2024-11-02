@@ -1,4 +1,5 @@
-import { db } from './db.js';
+import { db } from './db.js'; // Asegúrate de que la ruta sea correcta
+import { ref, push, get, child } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
 // Registrar mascota
 $("#mascotaForm").on("submit", function (event) {
@@ -7,9 +8,8 @@ $("#mascotaForm").on("submit", function (event) {
   const especie = $("#especie").val();
   const mascota = { nombre, especie };
 
-  db
-    .ref("mascotas/")
-    .push(mascota)
+  const mascotasRef = ref(db, "mascotas/");
+  push(mascotasRef, mascota)
     .then(() => {
       alert("Mascota registrada exitosamente!");
       $("#mascotaForm")[0].reset();
@@ -21,9 +21,8 @@ $("#mascotaForm").on("submit", function (event) {
 // Cargar mascotas
 function cargarMascotas() {
   $("#listaMascotas").empty();
-  db
-    .ref("mascotas/")
-    .once("value")
+  const mascotasRef = ref(db, "mascotas/");
+  get(mascotasRef)
     .then((snapshot) => {
       snapshot.forEach((childSnapshot) => {
         const mascota = childSnapshot.val();
