@@ -26,17 +26,22 @@ $("#mascotaForm").on("submit", function (event) {
 // Captura de errores en cargarMascotas
 function cargarMascotas() {
   $("#listaMascotas").empty();
-  db.ref("mascotas/")
-    .once("value")
-    .then((snapshot) => {
-      snapshot.forEach((childSnapshot) => {
-        const mascota = childSnapshot.val();
-        const li = `<li class="list-group-item">${mascota.nombre} - ${mascota.especie}</li>`;
-        $("#listaMascotas").append(li);
-      });
-    })
-    .catch((error) => console.error("Error al cargar mascotas: ", error));
+  const mascotasRef = ref(db, "mascotas/"); // Usar ref para obtener la referencia correcta
+  get(mascotasRef)
+      .then((snapshot) => {
+          if (snapshot.exists()) {
+              snapshot.forEach((childSnapshot) => {
+                  const mascota = childSnapshot.val();
+                  const li = `<li class="list-group-item">${mascota.nombre} - ${mascota.especie}</li>`;
+                  $("#listaMascotas").append(li);
+              });
+          } else {
+              $("#listaMascotas").append('<li class="list-group-item">No hay mascotas registradas.</li>');
+          }
+      })
+      .catch((error) => console.error("Error al cargar mascotas: ", error));
 }
+
 
 // Cargar mascotas al iniciar
 $(document).ready(function () {
