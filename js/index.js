@@ -5,7 +5,7 @@ $("#mascotaForm").on("submit", function (event) {
   const especie = $("#especie").val();
   const mascota = { nombre, especie };
 
-  database
+  db
     .ref("mascotas/")
     .push(mascota)
     .then(() => {
@@ -19,7 +19,7 @@ $("#mascotaForm").on("submit", function (event) {
 // Cargar mascotas
 function cargarMascotas() {
   $("#listaMascotas").empty();
-  database
+  db
     .ref("mascotas/")
     .once("value")
     .then((snapshot) => {
