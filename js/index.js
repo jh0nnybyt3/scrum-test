@@ -1,7 +1,7 @@
 // Configuración de Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCssRF6jbt0ixSpHGWDxoyInioBoqs_ZS0",
-  authDomain: "scrum-700ac.firebaseapp.com",
+  authDomain: "https://jh0nnybyt3.github.io/scrum-test/",
   databaseURL: "https://scrum-700ac-default-rtdb.firebaseio.com",
   projectId: "scrum-700ac",
   storageBucket: "scrum-700ac.firebasestorage.app",
